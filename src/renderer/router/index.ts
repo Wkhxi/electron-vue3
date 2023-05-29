@@ -4,19 +4,26 @@ import HomeView from '../views/HomeView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
+    // vite在处理动态引入组件时，会把对应的组件编译到独立的源码文件中，比如 文件名.哈希值.js 的形式，实现控制最终编译产物的大小，避免启动时加载一个很大的js文件
+    // { path: "/", redirect: "/WindowMain/Chat" },
+    // {
+    //   path: "/WindowMain",
+    //   component: () => import("./Window/WindowMain.vue"),
+    //   children: [
+    //     { path: "Chat", component: () => import("./Window/WindowMain/Chat.vue") },
+    //     { path: "Contact", component: () => import("./Window/WindowMain/Contact.vue") },
+    //     { path: "Collection", component: () => import("./Window/WindowMain/Collection.vue") },
+    //   ],
+    // },
+    // {
+    //   path: "/WindowSetting",
+    //   component: () => import("./Window/WindowSetting.vue"),
+    //   children: [{ path: "AccountSetting", component: () => import("./Window/WindowSetting/AccountSetting.vue") }],
+    // },
+    // {
+    //   path: "/WindowUserInfo",
+    //   component: () => import("./Window/WindowUserInfo.vue"),
+    // },
   ]
 })
 
