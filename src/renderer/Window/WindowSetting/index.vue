@@ -1,6 +1,31 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import BarTop from "../../Component/BarTop.vue";
+import { dialogReady } from "../../../common/Dialog"
+import { onMounted, onUnmounted } from "vue";
+
+const msgHandler = (e: any) => {
+  console.log('dialog msgHandler', e, new Date().getTime())
+  window.opener.postMessage({ msgName: "hello", value: "msg from your child" })
+}
+
+/**
+ * 当子窗口渲染完毕时
+ */
+onMounted(() => {
+  console.log('onMounted dialog', window, new Date().getTime())
+  // 子窗口自己添加监听
+  window.addEventListener("message", msgHandler)
+  // 给子窗口的父窗口发送消息
+  dialogReady()
+})
+
+
+// onUnmounted(() => {
+//   console.log('onUnmounted dialog')
+//   window.removeEventListener("message", msgHandler)
+// })
+
 </script>
 
 <template>

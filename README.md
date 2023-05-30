@@ -2,7 +2,7 @@
 
 ### 目录结构
 ```
-electron-vue-test
+electron-vue3
 ├─ dist                                       # 打包过程的临时产物
 │  ├─ assets
 │  ├─ favicon.ico
@@ -51,7 +51,7 @@ electron-vue-test
 ```
 
 
-### 设计要点
+### 项目要点
 ```
 
 1. vite插件：

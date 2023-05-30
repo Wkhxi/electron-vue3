@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { createDialog } from "../../common/Dialog"
 const route = useRoute();
 
 const mainWindowRoutes = ref([
@@ -18,6 +19,48 @@ watch(
   }
 );
 
+
+const handleOpenSettingWindow = async() => {
+  // const config = { modal: true, width: 2002, webPreferences: { webviewTag: false } };
+  /**
+   * window.open 为url 创建一个新的BrowserWindow 实例，并返回一个代理至 window.open 以让页面对其进行有限的控制
+   * window.open 打开子窗口速度只有几百毫秒，因为新窗口不会创建新的进程（一个窗口崩溃会导致其他窗口一起崩溃，主窗口不受影响）
+   * window.open创建的窗口跟在浏览器创建一个悬浮Dom的原理一样
+   */
+  // 第三个参数本应该 是 符合浏览器规范的一些 key-value 的配置
+  // 这里 传递的是 electron的窗口配置
+  // window.open(`/WindowSetting/AccountSetting`, "_blank", JSON.stringify(config));
+
+
+  const config = {
+    modal: true,
+    width: 800,
+    webPreferences: {
+      webViewTag: false
+    }
+  }
+  const dialog = await createDialog(`/WindowSetting/AccountSetting`, config)
+  console.log('mainWindow ~', dialog, window, new Date().getTime())
+  const msg = {
+    msgName: 'hello',
+    value: 'msg from your parent'
+  }
+  // 给dialog子窗口发送消息
+  dialog.postMessage(msg)
+}
+
+const msgHandler = (e: any) => {
+  console.log("mainWindow listener ~", e.data)
+}
+/**
+ * 此监听 持续监听子窗口发送的消息
+ */
+window.addEventListener("message", msgHandler)
+
+// onUnmounted(() => {
+//   console.log('onUnmounted mainWindow')
+//   window.removeEventListener("message", msgHandler)
+// })
 </script>
 
 
@@ -31,7 +74,7 @@ watch(
         <i :class="[`icon`, item.isSelected ? item.iconSelected : item.icon]"></i>
       </router-link>
     </div>
-    <div class="setting">
+    <div class="setting" @click="handleOpenSettingWindow">
       <div class="menu-item">
         <i class="icon icon-setting"></i>
       </div>

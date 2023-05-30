@@ -7,7 +7,7 @@ defineProps<{ title?: string }>();
 const isMaximized = ref(false);
 
 const handleCloseWindow = () => {
-  ipcRenderer.invoke("handleCloseWindow");
+  ipcRenderer.invoke("closeWindow");
 };
 
 /**

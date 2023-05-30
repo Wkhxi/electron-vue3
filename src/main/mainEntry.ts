@@ -5,6 +5,10 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"; // 设置渲染进程�
 
 import { CommonWindowEvent } from "./CommonWindowEvents"
 
+/**
+ * 每当有窗口创建成功就会触发
+ * 主窗口 或 window.open 创建的子窗口都会
+ */
 app.on("browser-window-created", (e, win) => { // 当一个新的 webContents 被创建时触发
   // 为新创建的窗口添加 监听
   CommonWindowEvent.regWinEvent(win);
