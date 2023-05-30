@@ -3,6 +3,14 @@
 import { app, BrowserWindow } from "electron"
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"; // 设置渲染进程开发者调试工具 不显示警告
 
+import { CommonWindowEvent } from "./CommonWindowEvents"
+
+app.on("browser-window-created", (e, win) => { // 当一个新的 webContents 被创建时触发
+  // 为新创建的窗口添加 监听
+  CommonWindowEvent.regWinEvent(win);
+});
+
+
 // 主窗口 设置为 全局变量，避免主窗口被垃圾回收
 let mainWindow: BrowserWindow;
 
@@ -12,6 +20,8 @@ let mainWindow: BrowserWindow;
 // whenReady事件 返回一个promise，等待捕获ready事件
 app.whenReady().then(() => {
   const config = {
+    frame: false, // 禁用标题栏
+    show: false,
     webPreferences: { // 网页功能设置
       nodeIntegration: true, // 把Node.js 集成到渲染进程
       webSecurity: false,
@@ -29,6 +39,10 @@ app.whenReady().then(() => {
   mainWindow = new BrowserWindow(config);
   // 返回promise，页面加载完成后会resolve
 
+  // mainWindow.once("ready-to-show", () => {
+  //   mainWindow.show();
+  // });
+
   console.log('mainEntry', mainWindow, process.argv)
   // mainWindow.loadURL(process.argv[2]);
 
@@ -42,4 +56,8 @@ app.whenReady().then(() => {
     // mainWindow.loadFile(path) 加载本地界面
     mainWindow.loadURL(`app://index.html`);
   }
+
+  CommonWindowEvent.listen();
+
+
 });

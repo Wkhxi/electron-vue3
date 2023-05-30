@@ -31,9 +31,9 @@ electron-vue-test
 │  ├─ model                                   # 应用程序的模型文件，如消息类、会话类、用户设置类
 │  └─ renderer                                # 渲染进程
 │     ├─ assets                               # 字体图标、公共样式、图片
-│     ├─ components                            # 公共组件
+│     ├─ Component                            # 公共组件
 │     ├─ store                                # 数据状态
-│     ├─ window                               # 不同窗口入口组件，通过 vue-router 导航，这个目录下的子目录存放对应窗口的子组件
+│     ├─ Window                               # 不同窗口入口组件，通过 vue-router 导航，这个目录下的子目录存放对应窗口的子组件
 │     ├─ App.vue                              # 渲染进程的入口组件
 │     └─ main.ts                              # 渲染进程入口
 │
@@ -49,4 +49,30 @@ electron-vue-test
 
 
 ```
+
+
+### 设计要点
+```
+
+1. vite插件：
+      - 构建electron开发环境
+      - electron打包
+
+2. 自定义标题栏
+      - 最大化
+      - 最小化
+      - 还原
+      - 鼠标拖动
+
+3. 白屏优化
+
+4. 窗口加载慢优化
+      - 窗口池
+      - window.open
+
+
+
+
+```
+
 
