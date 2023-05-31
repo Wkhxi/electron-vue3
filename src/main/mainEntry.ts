@@ -1,6 +1,6 @@
 // Electron 的内置模块都是通过 CJS Module 的形式导出的
 // 我们使用ESM引入 需要做相应处理
-import { app, BrowserWindow } from "electron"
+import { app, BrowserWindow, ipcMain } from "electron"
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"; // 设置渲染进程开发者调试工具 不显示警告
 
 import { CommonWindowEvent } from "./CommonWindowEvents"
@@ -64,4 +64,26 @@ app.whenReady().then(() => {
   CommonWindowEvent.listen();
 
 
+
+
 });
+
+
+
+// ipcMain.handle("addNewWindow", () => {
+//   const config = {
+//     frame: false,
+//     show: false,
+//     webPreferences: {
+//       nodeIntegration: true,
+//       webSecurity: false,
+//       allowRunningInsecureContent: true,
+//       contextIsolation: false,
+//       webviewTag: true,
+//       spellcheck: false,
+//       disableHtmlFullscreenWindowResize: true
+//     }
+//   }
+//   const newWindow = new BrowserWindow(config);
+//   newWindow.loadURL(process.argv[2])
+// })

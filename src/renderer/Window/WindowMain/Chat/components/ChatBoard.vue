@@ -1,14 +1,46 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import ChatSearch from "./ChatSearch.vue";
+import { useChatStore } from "../../../../store/chat";
+import ChatItem from "./ChatItem.vue"
+const store = useChatStore()
+const { selectItem } = store
+const { data } = store
 
-onMounted(() => {});
+
+onMounted(() => {
+  selectItem(data[2])
+});
+
+// test
+// const test = reactive({ name: { age: 1 }, arr: [{ x: 1 },2,3], age: 18 })
+// const { name, arr } = test
+// let { age } = test
+// let { x } = arr[0]
+
+// console.log(test, name, arr, age, x)
+
+// const handleChange= () => {
+//   const index = new Date().getTime()
+//   name[index] = 1
+//   arr.push(1)
+//   age++
+//   x++
+//   console.log('handleChange')
+// }
 </script>
 
 <template>
   <div class="chat-list">
     <ChatSearch />
-    <div class="list-box"></div>
+    <!-- <div>{{ name }}</div>
+    <div>{{ arr }}</div>
+    <div>{{ age }}</div>
+    <div>{{ x }}</div> -->
+    <!-- <button @click="handleChange">-1</button> -->
+    <div class="list-box">
+      <ChatItem v-for="item in data" :key="item.id" :data="item" />
+    </div>
   </div>
 </template>
 
