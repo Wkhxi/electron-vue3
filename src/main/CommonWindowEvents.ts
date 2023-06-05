@@ -1,8 +1,10 @@
-import { app, BrowserWindow, ipcMain } from "electron"
+import { app, BrowserWindow, ipcMain } from 'electron'
 
+interface SimpleKeyValueObject {
+  [key: string]: any
+}
 
 export class CommonWindowEvent {
-
   private static getWin(event: any) {
     console.log('getWin', event)
     // 返回 BrowserWindow | null - 返回拥有给定 webContents 的窗口，否则如果内容不属于一个窗口，返回null
@@ -20,39 +22,39 @@ export class CommonWindowEvent {
    *  isResizable 用户是否可以手动调整窗口大小 返回boolean
    */
   public static listen() {
-
     console.log('listen')
-    ipcMain.handle("minimizeWindow", (e) => { // e -- IpcMainInvokeEvent
+    ipcMain.handle('minimizeWindow', (e) => {
+      // e -- IpcMainInvokeEvent
       // this.getWin(e) -- 发送消息的 webContents 所对应的 browserView
-      this.getWin(e)?.minimize(); // this 即 listen的this 即 CommonWindowEvent类
-    });
+      this.getWin(e)?.minimize() // this 即 listen的this 即 CommonWindowEvent类
+    })
 
-    ipcMain.handle("maxmizeWindow", (e) => {
-      this.getWin(e)?.maximize();
-    });
+    ipcMain.handle('maxmizeWindow', (e) => {
+      this.getWin(e)?.maximize()
+    })
 
-    ipcMain.handle("unmaximizeWindow", (e) => {
-      this.getWin(e)?.unmaximize();
-    });
+    ipcMain.handle('unmaximizeWindow', (e) => {
+      this.getWin(e)?.unmaximize()
+    })
 
-    ipcMain.handle("hideWindow", (e) => {
-      this.getWin(e)?.hide();
-    });
+    ipcMain.handle('hideWindow', (e) => {
+      this.getWin(e)?.hide()
+    })
 
-    ipcMain.handle("showWindow", (e) => {
+    ipcMain.handle('showWindow', (e) => {
       console.log('showWindow', e, this.getWin(e))
-      this.getWin(e)?.show();
-    });
+      this.getWin(e)?.show()
+    })
 
-    ipcMain.handle("closeWindow", (e) => {
-      this.getWin(e)?.close();
-    });
-    ipcMain.handle("resizable", (e) => {
-      return this.getWin(e)?.isResizable();
-    });
-    ipcMain.handle("getPath", (e, name: any) => {
-      return app.getPath(name);
-    });
+    ipcMain.handle('closeWindow', (e) => {
+      this.getWin(e)?.close()
+    })
+    ipcMain.handle('resizable', (e) => {
+      return this.getWin(e)?.isResizable()
+    })
+    ipcMain.handle('getPath', (e, name: any) => {
+      return app.getPath(name)
+    })
   }
 
   public static regWinEvent(win: BrowserWindow) {
@@ -60,13 +62,12 @@ export class CommonWindowEvent {
      * 监听窗口的最大化或还原事件
      * 通知渲染进程 显示不同的 icon
      */
-    win.on("maximize", () => {
-      win.webContents.send("windowMaximized");
-    });
-    win.on("unmaximize", () => {
-      win.webContents.send("windowUnmaximized");
-    });
-
+    win.on('maximize', () => {
+      win.webContents.send('windowMaximized')
+    })
+    win.on('unmaximize', () => {
+      win.webContents.send('windowUnmaximized')
+    })
 
     /**
      * 主窗口创建成功是时为主窗口注册该回调
@@ -85,7 +86,7 @@ export class CommonWindowEvent {
      * 默认可以将 show设置为true
      * 根据具体的页面业务，可以手动控制其显示时机
      */
-    win.webContents.setWindowOpenHandler((params) => {
+    win.webContents.setWindowOpenHandler((params: any) => {
       /**
        * params
        *
@@ -95,7 +96,7 @@ export class CommonWindowEvent {
        */
 
       //基础的窗口配置对象
-      const config = {
+      const config: SimpleKeyValueObject = {
         frame: false,
         show: true,
         parent: null,
@@ -118,7 +119,7 @@ export class CommonWindowEvent {
       for (const p in features) {
         if (p === 'webPreferences') {
           for (const q in features.webPreferences) {
-            config.webPreferences[q] = features.webPreferences[q]
+            config['webPreferences'][q] = features.webPreferences[q]
           }
         } else {
           config[p] = features[p]
@@ -126,10 +127,9 @@ export class CommonWindowEvent {
       }
 
       // 子窗口是否为一个模态窗口
-      if (config['modal'] === true) config.parent = win;
+      if (config['modal'] === true) config.parent = win
 
       return { action: 'allow', overrideBrowserWindowOptions: config }
     })
-
   }
 }
