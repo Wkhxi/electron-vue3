@@ -2,6 +2,7 @@
 // 我们使用ESM引入 需要做相应处理
 import { app, BrowserWindow, ipcMain } from 'electron'
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true' // 设置渲染进程开发者调试工具 不显示警告
+// import path from 'path'
 
 import { CommonWindowEvent } from './CommonWindowEvents'
 import { CustomScheme } from './CustomScheme'

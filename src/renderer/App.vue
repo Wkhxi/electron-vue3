@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 // import fs from "fs";
 // import { ipcRenderer } from "electron";
 // import { onMounted } from "vue";
@@ -13,6 +12,4 @@
   <router-view />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

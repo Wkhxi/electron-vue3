@@ -5,6 +5,15 @@ import { ipcRenderer } from 'electron'
 import { ModelChat } from '../../../../model/ModelChat'
 import { ModelMessage } from '@/model/ModelMessage'
 import { db } from '@/common/db'
+import path from 'path'
+
+// const native = require('D:\\coding\\electron\\electron-vue3\\src\\native\\build\\Release\\addon.node')
+
+// process.cwd() D:\coding\electron\electron-vue3
+const nativePath = path.join(process.cwd(), 'src/native/build/Release/addon.node')
+console.log('process.cwd()', process.cwd(), nativePath)
+const native = require(nativePath)
+console.log('native', native)
 
 // const handleAddProcess = () => {
 //   ipcRenderer.invoke("addNewWindow")
@@ -84,6 +93,12 @@ const transaction = async () => {
     console.error(error)
   }
 }
+
+const testClipboard = () => {
+  const paths = native.readFilePaths()
+
+  console.log('paths', paths)
+}
 </script>
 
 <template>
@@ -99,6 +114,8 @@ const transaction = async () => {
       <button @click="deleteData">删除数据</button>
 
       <button @click="transaction">使用事务</button>
+
+      <button @click="testClipboard">测试剪切板</button>
     </div>
   </div>
 </template>
