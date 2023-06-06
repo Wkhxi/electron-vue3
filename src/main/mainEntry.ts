@@ -6,6 +6,7 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true' // 设置渲染进程开
 
 import { CommonWindowEvent } from './CommonWindowEvents'
 import { CustomScheme } from './CustomScheme'
+import { Updater } from './Updater'
 
 // const Database = require('better-sqlite3')
 // const db = new Database('db.db', {
@@ -69,6 +70,8 @@ app.whenReady().then(() => {
 
     // mainWindow.loadFile(path) 加载本地界面
     mainWindow.loadURL(`app://index.html`)
+
+    Updater.check()
   }
 
   CommonWindowEvent.listen()

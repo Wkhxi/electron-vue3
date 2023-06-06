@@ -1,6 +1,7 @@
 # electron-vue-test
 
 ### 目录结构
+
 ```
 electron-vue3
 ├─ dist                                       # 打包过程的临时产物
@@ -28,6 +29,7 @@ electron-vue3
 │  ├─ main                                    # 主进程
 │  │  ├─ CustomScheme.ts
 │  │  └─ mainEntry.ts
+│  ├─ native                                  # addon
 │  ├─ model                                   # 应用程序的模型文件，如消息类、会话类、用户设置类
 │  └─ renderer                                # 渲染进程
 │     ├─ assets                               # 字体图标、公共样式、图片
@@ -50,8 +52,8 @@ electron-vue3
 
 ```
 
-
 ### 项目要点
+
 ```
 
 1. vite插件：
@@ -72,10 +74,12 @@ electron-vue3
 
 5. SQLite
 
+6. addon
+
+7. electron-updater
+
 
 
 
 
 ```
-
-
